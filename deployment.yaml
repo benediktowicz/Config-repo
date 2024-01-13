@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aplikacja-webowa
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: aplikacja-webowa
+  template:
+    metadata:
+      labels:
+        app: aplikacja-webowa
+    spec:
+      containers:
+        - name: aplikacja-webowa
+          image: aplikacja-webowa:1.0
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aplikacja-webowa
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 5
+      maxUnavailable: 2
+  template:
+    metadata:
+      labels:
+        app: aplikacja-webowa
+    spec:
+      containers:
+      - name: aplikacja-webowa
+        image: aplikacja-webowa:1.0
